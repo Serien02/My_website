@@ -22,26 +22,48 @@
 
     <!-- 留言展示区域 -->
     <div class="message-list">
-      <div v-if="messageList.length === 0" class="empty-tip"></div>
-      <div v-for="(item, index) in messageList" :key="index" class="message-item">
-        <div class="message-name">💬 {{ item.name }}</div>
+      <div v-if="messageList.length === 0" class="empty-tip">暂无留言，快来留下你的足迹吧～</div>
+      <div v-for="(item, index) in messageList" :key="item.id || index" class="message-item">
+        <div class="message-name">💬 {{ item.username }}</div>
         <div class="message-content">{{ item.content }}</div>
-        <div class="message-time">{{ item.time }}</div>
+        <div class="message-time">{{ formatTime(item.createTime) }}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios'
+
+// 配置axios基础路径（替换为你的云服务器IP）
+axios.defaults.baseURL = 'http://localhost:8081/api'
 
 // 响应式数据：输入框内容、留言列表
 const inputName = ref('')
 const inputContent = ref('')
 const messageList = ref([])
 
+// 初始化加载历史留言
+const loadMessages = async () => {
+  try {
+    const response = await axios.get('/message/list')
+    messageList.value = response.data
+  } catch (error) {
+    console.error('加载留言失败：', error)
+    alert('加载历史留言失败，请稍后重试')
+  }
+}
+
+// 格式化时间
+const formatTime = (timeStr) => {
+  if (!timeStr) return ''
+  const date = new Date(timeStr)
+  return date.toLocaleString()
+}
+
 // 提交留言
-const submitMessage = () => {
+const submitMessage = async () => {
   // 简单校验
   if (!inputName.value.trim()) {
     alert('请输入昵称！')
@@ -52,27 +74,52 @@ const submitMessage = () => {
     return
   }
 
-  // 构造留言对象
-  const newMessage = {
-    name: inputName.value,
-    content: inputContent.value,
-    time: new Date().toLocaleString() // 本地时间格式
+  try {
+    // 构造留言对象
+    const newMessage = {
+      username: inputName.value,
+      content: inputContent.value
+    }
+
+    // 提交到后端
+    const response = await axios.post('/message/submit', newMessage)
+    alert(response.data)
+    
+    // 提交成功后重新加载留言列表
+    if (response.data.includes('成功')) {
+      // 清空输入框
+      inputName.value = ''
+      inputContent.value = ''
+      // 重新加载留言
+      loadMessages()
+    }
+  } catch (error) {
+    console.error('提交留言失败：', error)
+    alert('提交留言失败，请稍后重试')
   }
-
-  // 添加到留言列表
-  messageList.value.unshift(newMessage) // 新留言放最前面
-
-  // 清空输入框
-  inputName.value = ''
-  inputContent.value = ''
 }
 
 // 清空所有留言
-const clearAll = () => {
+const clearAll = async () => {
   if (confirm('确定清空所有留言吗？')) {
-    messageList.value = []
+    try {
+      const response = await axios.delete('/message/clear')
+      alert(response.data)
+      // 清空成功后重新加载列表
+      if (response.data.includes('成功')) {
+        loadMessages()
+      }
+    } catch (error) {
+      console.error('清空留言失败：', error)
+      alert('清空留言失败，请稍后重试')
+    }
   }
 }
+
+// 页面挂载时加载历史留言
+onMounted(() => {
+  loadMessages()
+})
 </script>
 
 <style scoped>
@@ -82,6 +129,10 @@ const clearAll = () => {
   margin: 20px auto;
   padding: 0 20px;
   font-family: sans-serif;
+  background: rgba(255, 255, 255, 0.85); /* 增加背景透明度，提升可读性 */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .input-area {
@@ -95,6 +146,7 @@ const clearAll = () => {
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .submit-btn {
@@ -104,6 +156,11 @@ const clearAll = () => {
   padding: 8px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background 0.3s;
+}
+
+.submit-btn:hover {
+  background: #337ecc;
 }
 
 .clear-btn {
@@ -113,6 +170,11 @@ const clearAll = () => {
   padding: 8px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background 0.3s;
+}
+
+.clear-btn:hover {
+  background: #e45656;
 }
 
 .message-list {
@@ -126,6 +188,7 @@ const clearAll = () => {
   padding: 10px;
   border: 1px solid #eee;
   border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
 }
 
 .message-name {
