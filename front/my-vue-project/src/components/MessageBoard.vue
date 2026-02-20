@@ -22,7 +22,7 @@
 
     <!-- 留言展示区域 -->
     <div class="message-list">
-      <div v-if="messageList.length === 0" class="empty-tip">暂无留言，快来留下你的足迹吧～</div>
+      <div v-if="messageList.length === 0" class="empty-tip"></div>
       <div v-for="(item, index) in messageList" :key="item.id || index" class="message-item">
         <div class="message-name">💬 {{ item.username }}</div>
         <div class="message-content">{{ item.content }}</div>
@@ -35,8 +35,10 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from 'axios'
+//import { ElCascader } from 'element-plus'
+import 'element-plus/dist/index.css'
 
-// 配置axios基础路径（替换为你的云服务器IP）
+// 配置axios基础路径
 axios.defaults.baseURL = 'http://localhost:8081/api'
 
 // 响应式数据：输入框内容、留言列表
