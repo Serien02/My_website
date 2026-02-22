@@ -44,7 +44,7 @@ public class messagecontroller {
     @DeleteMapping("/clear")
     public String clearAllMessages() {
         boolean result = messageService.clearAllMessages();
-        return result ? "清空成功！" : "清空失败！";
+        return result ? "清空成功！" : "清空失败或无数据！";
     }
 
 }
