@@ -1,13 +1,11 @@
 <template>
-  <MessageBoard />
+  <router-view />
 </template>
 
 <script setup>
-//import HelloWorld from './components/HelloWorld.vue'
-import MessageBoard from './components/MessageBoard.vue'
 </script>
 
-<style>
+<style scoped>
 * {
   margin: 0;
   padding: 0;
