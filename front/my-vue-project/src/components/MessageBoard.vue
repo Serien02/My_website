@@ -39,7 +39,7 @@ import axios from 'axios'
 import 'element-plus/dist/index.css'
 
 // 配置axios基础路径
-axios.defaults.baseURL = 'http://localhost:8081/api'
+axios.defaults.baseURL = 'http://localhost:8081'
 
 // 响应式数据：输入框内容、留言列表
 const inputName = ref('')

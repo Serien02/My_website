@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home_page from '@/components/Home_page.vue'
 import MessageBoard from '@/components/MessageBoard.vue'
+import Aichat from '@/components/Ai_chat.vue'
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: '/message',   
     name: 'Message',
     component: MessageBoard 
+  },
+  {
+    path: '/ai_chat',   
+    name: 'Aichat',
+    component: Aichat 
   }
   
 ]

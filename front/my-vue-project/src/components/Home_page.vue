@@ -6,8 +6,8 @@
         留言板
       </button>
       
-      <button @click="goToPage('/page1')" class="nav-btn">
-        页面1（预留）
+      <button @click="goToPage('/ai_chat')" class="nav-btn">
+        AI聊天
       </button>
       
       <button @click="goToPage('/page2')" class="nav-btn">
