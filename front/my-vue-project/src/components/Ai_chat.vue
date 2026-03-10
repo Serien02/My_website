@@ -38,7 +38,7 @@
 import { ref, nextTick } from 'vue';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:8081';
+axios.defaults.baseURL = process.env.VUE_APP_BASE_API
 axios.defaults.timeout = 30000;
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 
