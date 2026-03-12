@@ -12,7 +12,7 @@
       >
       <textarea 
         v-model="inputContent" 
-        placeholder="请输入留言内容" 
+        placeholder="" 
         class="content-input"
         rows="4"
       ></textarea>
