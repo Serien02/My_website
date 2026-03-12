@@ -1,7 +1,7 @@
 <template>
   <div class="message-board">
     <!-- 标题 -->
-    <h2>留言板</h2>
+    <h2>Message</h2>
     
     <!-- 留言输入区域 -->
     <div class="input-area">
