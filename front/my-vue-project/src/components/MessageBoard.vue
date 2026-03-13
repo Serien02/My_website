@@ -2,7 +2,6 @@
   <div class="message-board">
     <!-- 标题 -->
     <h2>留言板</h2>
-    
     <!-- 留言输入区域 -->
     <div class="input-area">
       <input 
@@ -16,8 +15,8 @@
         class="content-input"
         rows="4"
       ></textarea>
-      <button @click="submitMessage" class="submit-btn">提交留言</button>
-      <button @click="clearAll" class="clear-btn">清空所有</button>
+      <button @click="submitMessage" class="submit-btn">提交</button>
+      <button @click="clearAll" class="clear-btn">清空</button>
     </div>
 
     <!-- 留言展示区域 -->
