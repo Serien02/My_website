@@ -11,7 +11,7 @@
       </button>
       
       <button @click="goToPage('/page2')" class="nav-btn">
-        页面2（预留）
+        后台管理功能
       </button>
       
       <button @click="goToPage('/page3')" class="nav-btn">
