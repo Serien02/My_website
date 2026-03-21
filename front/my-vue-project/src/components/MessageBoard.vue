@@ -211,7 +211,6 @@ onMounted(() => {
 </style>
 
 <style>
-/* 全局样式：给body添加背景图 */
 body {
   margin: 0;
   padding: 0;

@@ -10,7 +10,7 @@
         AI聊天
       </button>
       
-      <button @click="goToPage('/page2')" class="nav-btn">
+      <button @click="goToPage('/management')" class="nav-btn">
         后台管理功能
       </button>
       
